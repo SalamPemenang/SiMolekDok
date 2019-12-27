@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dok;
 use Illuminate\Http\Request;
+use DB;
 use Image;
 use Carbon\Carbon;
 
@@ -11,7 +12,18 @@ class DokController extends Controller
 {
     public function viewDok($id)
     { 
-        return view('View-Dokumentasi')->with('id',$id);
+        $foto = DB::table('dokumentasi')
+                    ->join('foto', 'dokumentasi.id', '=', 'foto.dokumentasi_id')
+                    ->where('dokumentasi.id_sub_kegiatan', '=', $id)
+                    ->select('foto.foto_dokumentasi', 'foto.waktu_foto_dokumentasi')
+                    ->get();
+
+        $dok = DB::table('dokumentasi')
+                    ->where('dokumentasi.id_sub_kegiatan', '=', $id)
+                    ->select('dokumentasi.*')
+                    ->get();
+
+        return view('View-Dokumentasi', ['foto' => $foto, 'dok' => $dok]);
     }
 
     public function addDok(Request $req)
