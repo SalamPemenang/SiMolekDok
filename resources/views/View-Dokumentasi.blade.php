@@ -5,68 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/style.css')}}">
     <title>Si Molek Dokumentasi View</title>
-    <style>
-        * {
-          box-sizing: border-box;
-          font-family: Arial, Helvetica, sans-serif;
-      }
-
-      body {
-          margin: 0;
-          font-family: Arial, Helvetica, sans-serif;
-      }
-
-      /* Style the top navigation bar */
-      .topnav {
-          overflow: hidden;
-          background-color: #333;
-      }
-
-      /* Style the topnav links */
-      .topnav a {
-          float: left;
-          display: block;
-          color: #f2f2f2;
-          text-align: center;
-          padding: 14px 16px;
-          text-decoration: none;
-      }
-
-      /* Change color on hover */
-      .topnav a:hover {
-          background-color: #ddd;
-          color: black;
-      }
-
-      /* Style the content */
-      .content {
-          background-color: #ddd;
-          padding: 10px;
-          height: 200px; /* Should be removed. Only for demonstration */
-      }
-
-      /* Style the footer */
-      .footer {
-          background-color: #f1f1f1;
-          padding: 10px;
-      }
-  </style>
 </head>
 <body>
     <div class="topnav">
-      <a href="#">Link</a>
-      <a href="#">Link</a>
-      <a href="#">Link</a>
-    </div>
+      <div class="grid-container">
+          <div class="item1">
+            <a href="#" class="c-green fs-20">
+              <strong>Si Molek Dokumentasi</strong>
+          </a>
+      </div>
+      <div class="item3">
+        <a href="#" class="c-green fs-30">
+          &larr;
+      </a>
+  </div>  
+  <div class="item4"></div>
+</div>
+</div>
 
-    <div class="content">
-      <h2>CSS Template</h2>
-      <p>A topnav, content and a footer.</p>
+<div class="content">
+    @foreach($dok as $d)
+    <h3 class="c-green">
+        {{$d->nama_sub_kegiatan}}
+    </h3>
+    <div class="container">
+        <img src="{{'/assets/video/'.$d->video_dokumentasi}}" class="image-card">
+        <span>{{$d->waktu_video_dokumentasi}}</span>
     </div>
+    @endforeach
+    <br>
+    <div class="container">
+        @foreach($foto as $f)
+            <div class="ribbon image-card" style="background-image: url('/assets/image/default-foto.png');">  
+                <div class="ribbon">
+                  <span class="ribbon4">{{$f->waktu_foto_dokumentasi}}</span>
+              </div>
+          </div>
+        @endforeach
 
-    <div class="footer">
-      <p>Footer</p>
-    </div>
+  </div>
+</div>
 
 </body>
 </html>
