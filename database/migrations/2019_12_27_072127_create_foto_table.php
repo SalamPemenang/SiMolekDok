@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDokumentasiTable extends Migration
+class CreateFotoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateDokumentasiTable extends Migration
      */
     public function up()
     {
-        Schema::create('dokumentasi', function (Blueprint $table) {
+        Schema::create('foto', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_sub_kegiatan')->nullable();
-            $table->string('nama_sub_kegiatan')->nullable();
-            $table->string('video_dokumentasi')->default('default-video.png');
-            $table->string('waktu_video_dokumentasi')->nullable();
+            $table->unsignedBigInteger('dokumentasi_id');
+            $table->foreign('dokumentasi_id')->references('id')->on('dokumentasi');
+            $table->string('foto_dokumentasi')->default('default-foto.png');
+            $table->string('waktu_foto_dokumentasi')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateDokumentasiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dokumentasi');
+        Schema::dropIfExists('foto');
     }
 }
