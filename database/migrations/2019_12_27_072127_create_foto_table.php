@@ -17,7 +17,7 @@ class CreateFotoTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('dokumentasi_id');
             $table->foreign('dokumentasi_id')->references('id')->on('dokumentasi');
-            $table->string('foto_dokumentasi')->default('default-foto.png');
+            $table->string('foto_dokumentasi')->nullable();
             $table->string('waktu_foto_dokumentasi')->nullable();
             $table->timestamps();
         });

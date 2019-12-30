@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Dok;
+use App\Foto;
 use Illuminate\Http\Request;
 use DB;
 use Image;
@@ -10,48 +10,55 @@ use Carbon\Carbon;
 
 class DokController extends Controller
 {
-    
+
     public function viewDok($id)
     { 
         $foto = DB::table('dokumentasi')
-                    ->join('foto', 'dokumentasi.id', '=', 'foto.dokumentasi_id')
-                    ->where('dokumentasi.id_sub_kegiatan', '=', $id)
-                    ->select('foto.foto_dokumentasi', 'foto.waktu_foto_dokumentasi')
-                    ->get();
+        ->join('foto', 'dokumentasi.id', '=', 'foto.dokumentasi_id')
+        ->where('dokumentasi.id_sub_kegiatan', '=', $id)
+        ->select('foto.foto_dokumentasi', 'foto.waktu_foto_dokumentasi')
+        ->get();
 
-        $dok = DB::table('dokumentasi')
-                    ->where('dokumentasi.id_sub_kegiatan', '=', $id)
-                    ->select('dokumentasi.*')
-                    ->get();
+        $dok = DB::table('dokumentasi')->where('id_sub_kegiatan', $id)->first();
 
         return view('View-Dokumentasi', ['foto' => $foto, 'dok' => $dok]);
     }
 
     public function sendDok($id_sub_kegiatan, $nama_sub_kegiatan)
     {   
-        $sendDok = new Dok;
-        $sendDok->id_sub_kegiatan = $id_sub_kegiatan;
-        $sendDok->nama_sub_kegiatan = $nama_sub_kegiatan;
-        $sendDok->save();
+        if(DB::table('dokumentasi')->where('id_sub_kegiatan', $id_sub_kegiatan)->first()){
+            return redirect('/view/dokumentasi/'.$id_sub_kegiatan);
+        }else{
+            $sendDok = new Dok;
+            $sendDok->id_sub_kegiatan = $id_sub_kegiatan;
+            $sendDok->nama_sub_kegiatan = $nama_sub_kegiatan;
+            $sendDok->save();
+
+            return redirect('/view/dokumentasi/'.$id_sub_kegiatan);
+        }
     }
 
 
-    public function addDok(Request $req)
+    public function formDok($id)
     {
-        $dok = new Dok;
+        $dok = Dok::find($id);
+        return view('tambahDok', compact('dok'));
+    }
 
-        // Foto Dokumentasi
-        if($req->hasFile('foto_dokumentasi')){
-            $foto = $req->file('foto_dokumentasi');
-            $filename = time() . '.' . $foto->getClientOriginalExtension();
-            Image::make($foto)->resize(150, 150)->save(public_path('/assets/image/' . $filename));
-        }
+    public function formFoto()
+    {
+        return view('tambahFoto');
+    }
+
+    public function addDok(Request $req, $id)
+    {
+        $dok = Dok::find($id);
 
         // Video Dokumentasi
         if($req->hasFile('video_dokumentasi')){
 
             $file = $req->file('video_dokumentasi');
-            $filename2 = $file->getClientOriginalName();
+            $filename2 = time() . '.' . $file->getClientOriginalName();
             $path = public_path().'/assets/video/';
             $file->move($path, $filename2);
         }
@@ -60,11 +67,31 @@ class DokController extends Controller
         $realtime = Carbon::now();
         $realtime->toDateString();
         
-        $dok->foto_dokumentasi = $filename;
         $dok->video_dokumentasi = $filename2;
-        $dok->waktu_foto_dokumentasi = $realtime;
         $dok->waktu_video_dokumentasi = $realtime;
         $dok->save();
         return redirect()->back();
     }
+
+    public function addFoto(Request $req, $id)
+    {
+        $dok = new Foto;
+
+        // Foto Dokumentasi
+        if($req->hasFile('foto_dokumentasi')){
+            $foto = $req->file('foto_dokumentasi');
+            $filename = time() . '.' . $foto->getClientOriginalExtension();
+            Image::make($foto)->resize(150, 150)->save(public_path('/assets/image/' . $filename));
+        }
+
+        $realtime = Carbon::now();
+        $realtime->toDateString();
+
+        $dok->dokumentasi_id = $id;
+        $dok->foto_dokumentasi = $filename;
+        $dok->waktu_foto_dokumentasi = $realtime;
+        $dok->save();
+        return redirect()->back();
+    }
+
 }

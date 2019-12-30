@@ -17,7 +17,7 @@ class CreateDokumentasiTable extends Migration
             $table->bigIncrements('id');
             $table->integer('id_sub_kegiatan')->nullable();
             $table->string('nama_sub_kegiatan')->nullable();
-            $table->string('video_dokumentasi')->default('default-video.png');
+            $table->string('video_dokumentasi')->nullable();
             $table->string('waktu_video_dokumentasi')->nullable();
             $table->timestamps();
         });
