@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/view/dokumentasi/{id}', 'DokController@viewDok')->name('view-dok');
+Route::get('/view/dokumentasi/{id_sub_kegiatan}', 'DokController@viewDok')->name('view-dok');
+Route::get('/send/dokumentasi/{id_sub_kegiatan}/{nama_sub_kegiatan}', 'DokController@sendDok')->name('send-dok');
 Route::get('/upload/dok/{id}', 'DokController@formDok')->name('upload');
 Route::get('/upload/foto', 'DokController@formFoto')->name('upload.foto');
 Route::post('/upload/dok/proses/{id}', 'DokController@addDok')->name('upload.proses');
