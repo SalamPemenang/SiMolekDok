@@ -8,6 +8,7 @@ use DB;
 
 class DokController extends Controller
 {
+    
     public function viewDok($id)
     { 
         $foto = DB::table('dokumentasi')
@@ -23,4 +24,13 @@ class DokController extends Controller
 
         return view('View-Dokumentasi', ['foto' => $foto, 'dok' => $dok]);
     }
+
+    public function sendDok($id_sub_kegiatan, $nama_sub_kegiatan)
+    {   
+        $sendDok = new Dok;
+        $sendDok->id_sub_kegiatan = $id_sub_kegiatan;
+        $sendDok->nama_sub_kegiatan = $nama_sub_kegiatan;
+        $sendDok->save();
+    }
+
 }

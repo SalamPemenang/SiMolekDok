@@ -11,4 +11,5 @@
 |
 */
 
-Route::get('/view/dokumentasi/{id}', 'DokController@viewDok')->name('view-dok');
+Route::get('/view/dokumentasi/{id_sub_kegiatan}', 'DokController@viewDok')->name('view-dok');
+Route::get('/send/dokumentasi/{id_sub_kegiatan}/{nama_sub_kegiatan}', 'DokController@sendDok')->name('send-dok');
