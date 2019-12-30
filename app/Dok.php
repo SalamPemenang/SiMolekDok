@@ -12,6 +12,6 @@ class Dok extends Model
     						'video_dokumentasi',
     						'waktu_video_dokumentasi'
     					];
-    protected $guarded = ['id_dokumentasi'];
-    protected $primaryKey = 'id_dokumentasi';
+    protected $guarded = ['id'];
+    protected $primaryKey = 'id';
 }
