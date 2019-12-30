@@ -12,3 +12,8 @@
 */
 
 Route::get('/view/dokumentasi/{id}', 'DokController@viewDok')->name('view-dok');
+Route::get('/upload/dok/{id}', 'DokController@formDok')->name('upload');
+Route::get('/upload/foto', 'DokController@formFoto')->name('upload.foto');
+Route::post('/upload/dok/proses/{id}', 'DokController@addDok')->name('upload.proses');
+Route::post('/upload/foto/proses', 'DokController@addFoto')->name('upload.foto.proses');
+
