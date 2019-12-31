@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Dok;
 use App\Foto;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use DB;
 use Image;
 use Carbon\Carbon;
