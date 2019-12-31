@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Dok;
 use App\Foto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use DB;
 use Image;
 use Carbon\Carbon;
@@ -38,18 +39,6 @@ class DokController extends Controller
         }
     }
 
-
-    public function formDok($id)
-    {
-        $dok = Dok::find($id);
-        return view('tambahDok', compact('dok'));
-    }
-
-    public function formFoto()
-    {
-        return view('tambahFoto');
-    }
-
     public function addDok(Request $req, $id)
     {
         $dok = Dok::find($id);
@@ -57,17 +46,25 @@ class DokController extends Controller
         // Video Dokumentasi
         if($req->hasFile('video_dokumentasi')){
 
-            $file = $req->file('video_dokumentasi');
-            $filename2 = time() . '.' . $file->getClientOriginalName();
+            // $file = $req->file('video_dokumentasi');
+            // $filename2 = time() . '.' . $file->getClientOriginalName();
             $path = public_path().'/assets/video/';
-            $file->move($path, $filename2);
+            // $file = Storage::putFile(
+            //     'public/video',
+            //     $filename2,
+            // );
+            // $file->move('/public/video', $filename2);
+            $file = $req->file('video_dokumentasi');
+            $name = time().$file->getClientOriginalName();
+            // Storage::putfile('public/videos', $file);
+            $file->move($path, $name);
         }
-
+        
         // Realtime
         $realtime = Carbon::now();
         $realtime->toDateString();
         
-        $dok->video_dokumentasi = $filename2;
+        $dok->video_dokumentasi = $name;
         $dok->waktu_video_dokumentasi = $realtime;
         $dok->save();
         return redirect()->back();
