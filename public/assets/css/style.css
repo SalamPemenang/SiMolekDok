@@ -5,6 +5,8 @@ body {
 	font-family: 'Ubuntu', sans-serif;
 }
 
+
+
 .dot{
 	border-top-style: dotted;
 	border-right-style: dotted;
@@ -156,30 +158,40 @@ body {
 	}
 }
 .ribbon4 {
-	position: absolute;
-	top: 15px;
-	padding: 8px 10px;
-	background: #165E55;
-	box-shadow: -1px 2px 3px rgba(0,0,0,.3);
+  position: absolute;
+  top: 15px;
+  padding: 8px 10px;
+  background: #165E55;
+  box-shadow: -1px 2px 3px rgba(0,0,0,.3);
 }
 .ribbon4:before, .ribbon4:after {
-	content: "";
-	position: absolute;
+  content: "";
+  position: absolute;
 }
 .ribbon4:before {
-	width: 7px;
-	height: 100%;
-	top: 0;
-	left: -6.5px;
-	padding: 0 0 7px;
-	background: inherit;
-	border-radius: 5px 0 0 5px;
+  width: 7px;
+  height: 100%;
+  top: 0;
+  left: -6.5px;
+  padding: 0 0 7px;
+  background: #165E55;
+  border-radius: 5px 0 0 5px;
 }
 .ribbon4:after {
-	width: 5px;
-	height: 5px;
-	bottom: -5px;
-	left: -4.5px;
-	background: black;
-	border-radius: 5px 0 0 5px;
+  width: 5px;
+  height: 5px;
+  bottom: -5px;
+  left: -4.5px;
+  border-radius: 5px 0 0 5px;
+ }
+@media only screen and (min-width: 500px) {
+  .mobile-mini {
+  	display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .rule {
+  	display: none;
+  }
 }

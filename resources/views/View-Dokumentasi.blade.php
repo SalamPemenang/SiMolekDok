@@ -7,8 +7,10 @@
   <link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
   <title>Si Molek Dokumentasi View</title>
 </head>
+
 <body style="background-color: #AEDBC6">
-  <div class="topnav">
+<div class="mobile-mini">
+    <div class="topnav">
     <div class="grid-container">
       <div class="item1">
         <a href="#" class="c-green fs-17">
@@ -25,7 +27,7 @@
   </div>
   <div class="content">
     <div class="container">
-      <h3 class="c-green">{{$dok->nama_sub_kegiatan}}</h3>
+      <h1 class="c-green">{{$dok->nama_sub_kegiatan}}</h1>
       @if(e($dok->video_dokumentasi) == null)
       <form action="{{route('upload.proses', $dok->id)}}" method="post" enctype="multipart/form-data">
         @csrf
@@ -38,7 +40,7 @@
             <br><br>
           </p>
         </a>
-        <input onchange="this.form.submit();" class="none" id="file-input-video-1" type="file" name="video_dokumentasi" accept="video/mp4,video/x-m4v,video/*"/> 
+        <input onchange="this.form.submit();" class="none" id="file-input-video-1" type="file" name="video_dokumentasi" accept="video/mp4"/> 
       </form>
       @else
       <center>
@@ -52,7 +54,7 @@
                   <img src="/assets/video/logo-video.png" width="20">
                 </label>
               </center>
-              <input onchange="this.form.submit();" class="none" id="file-input-video-2" type="file" name="video_dokumentasi" accept="video/mp4,video/x-m4v,video/*"/>  
+              <input onchange="this.form.submit();" class="none" id="file-input-video-2" type="file" name="video_dokumentasi" accept="video/mp4"/>  
             </form>
           </button>
         </p>
@@ -60,6 +62,7 @@
       <video class="image-card" controls>
         <source src="{{'/assets/video/'. $dok->video_dokumentasi}}" type="video/mp4">
         </video>
+        <center>{{$dok->waktu_video_dokumentasi}}</center>
         @endif
       </div>
       <br><br><br>
@@ -92,12 +95,18 @@
       <br><br><br>
     </div>
 
+</div>
+<div class="rule">
+  <br><br><br>
+  <h3>
+    <center>
+      <strong>Buka Di layar screen berukuran 500 pixel ke bawah !</strong>
+    </center>
+  </h3>
+</div>
     <script src="{{asset('assets/bootstrap/js/jquery.min.js')}}"></script>
     <script src="{{asset('assets/bootstrap/js/popper.min.js')}}"></script>
     <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
 
-  </body>
-  </html>
-  <script type="text/javascript">
-
-  </script>
+</body>
+</html>
