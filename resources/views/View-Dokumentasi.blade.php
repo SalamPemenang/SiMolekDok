@@ -1,72 +1,112 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/style.css')}}">
-    <title>Si Molek Dokumentasi View</title>
-    <style>
-        * {
-          box-sizing: border-box;
-          font-family: Arial, Helvetica, sans-serif;
-      }
-
-      body {
-          margin: 0;
-          font-family: Arial, Helvetica, sans-serif;
-      }
-
-      /* Style the top navigation bar */
-      .topnav {
-          overflow: hidden;
-          background-color: #333;
-      }
-
-      /* Style the topnav links */
-      .topnav a {
-          float: left;
-          display: block;
-          color: #f2f2f2;
-          text-align: center;
-          padding: 14px 16px;
-          text-decoration: none;
-      }
-
-      /* Change color on hover */
-      .topnav a:hover {
-          background-color: #ddd;
-          color: black;
-      }
-
-      /* Style the content */
-      .content {
-          background-color: #ddd;
-          padding: 10px;
-          height: 200px; /* Should be removed. Only for demonstration */
-      }
-
-      /* Style the footer */
-      .footer {
-          background-color: #f1f1f1;
-          padding: 10px;
-      }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
+  <title>Si Molek Dokumentasi View</title>
 </head>
-<body>
+
+<body style="background-color: #AEDBC6">
+<div class="mobile-mini">
     <div class="topnav">
-      <a href="#">Link</a>
-      <a href="#">Link</a>
-      <a href="#">Link</a>
+    <div class="grid-container">
+      <div class="item1">
+        <a href="#" class="c-green fs-17">
+          <strong>Si Molek Dokumentasi</strong>
+        </a>
+      </div>
+      <div class="item3">
+        <a href="#" class="c-green fs-30">
+          &larr;
+        </a>
+      </div>  
+      <div class="item4"></div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="container">
+      <h1 class="c-green">{{$dok->nama_sub_kegiatan}}</h1>
+      @if(e($dok->video_dokumentasi) == null)
+      <form action="{{route('upload.proses', $dok->id)}}" method="post" enctype="multipart/form-data">
+        @csrf
+        <a>
+          <p class="dot">
+            <br><br>
+            <label for="file-input-video-1">
+              &#10010; Tambah Video 
+            </label>
+            <br><br>
+          </p>
+        </a>
+        <input onchange="this.form.submit();" class="none" id="file-input-video-1" type="file" name="video_dokumentasi" accept="video/mp4"/> 
+      </form>
+      @else
+      <center>
+        <p class="c-green">
+          Dokumentasi Video
+          <button class="btn-add">
+            <form action="{{route('upload.proses', $dok->id)}}" method="post" enctype="multipart/form-data">
+              @csrf
+              <center>
+                <label for="file-input-video-2">
+                  <img src="/assets/video/logo-video.png" width="20">
+                </label>
+              </center>
+              <input onchange="this.form.submit();" class="none" id="file-input-video-2" type="file" name="video_dokumentasi" accept="video/mp4"/>  
+            </form>
+          </button>
+        </p>
+      </center>
+      <video class="image-card" controls>
+        <source src="{{'/assets/video/'. $dok->video_dokumentasi}}" type="video/mp4">
+        </video>
+        <center>{{$dok->waktu_video_dokumentasi}}</center>
+        @endif
+      </div>
+      <br><br><br>
+      <div class="container">
+        <center>
+          <p class="c-green">Dokumentasi Foto 
+            <button class="btn-add">
+              <center>
+                <form action="{{route('upload.foto.proses', $dok->id)}}" method="post" enctype="multipart/form-data">
+                  @csrf
+                  <label for="file-input-foto">
+                    <img src="/assets/image/add-img.png" width="23">
+                  </label>
+                  <input class="none" onchange="this.form.submit();" id="file-input-foto" type="file" name="foto_dokumentasi" accept="image/png,image/jpeg,image/*"/> <br><br>
+                </form> 
+              </center>
+            </button>
+          </p>
+        </center>
+        @foreach($foto as $f)
+        <div class="ribbon image-card" style="background-image: url('{{'/assets/image/'. $f->foto_dokumentasi}}');">
+          <div class="ribbon">
+            <span class="ribbon4">{{$f->waktu_foto_dokumentasi}}</span>
+          </div>
+        </div>
+        <br>
+        <br>
+        @endforeach
+      </div>
+      <br><br><br>
     </div>
 
-    <div class="content">
-      <h2>CSS Template</h2>
-      <p>A topnav, content and a footer.</p>
-    </div>
-
-    <div class="footer">
-      <p>Footer</p>
-    </div>
+</div>
+<div class="rule">
+  <br><br><br>
+  <h3>
+    <center>
+      <strong>Buka Di layar screen berukuran 500 pixel ke bawah !</strong>
+    </center>
+  </h3>
+</div>
+    <script src="{{asset('assets/bootstrap/js/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/bootstrap/js/popper.min.js')}}"></script>
+    <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
 
 </body>
 </html>
