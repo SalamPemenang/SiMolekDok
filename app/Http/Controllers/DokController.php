@@ -19,10 +19,7 @@ class DokController extends Controller
         ->select('foto.foto_dokumentasi', 'foto.waktu_foto_dokumentasi')
         ->get();
 
-        $dok = DB::table('dokumentasi')
-        ->where('dokumentasi.id_sub_kegiatan', '=', $id)
-        ->select('dokumentasi.*')
-        ->get();
+        $dok = DB::table('dokumentasi')->where('id_sub_kegiatan', $id)->first();
 
         return view('View-Dokumentasi', ['foto' => $foto, 'dok' => $dok]);
     }
@@ -61,7 +58,7 @@ class DokController extends Controller
         if($req->hasFile('video_dokumentasi')){
 
             $file = $req->file('video_dokumentasi');
-            $filename2 = $file->getClientOriginalName();
+            $filename2 = time() . '.' . $file->getClientOriginalName();
             $path = public_path().'/assets/video/';
             $file->move($path, $filename2);
         }
@@ -76,7 +73,7 @@ class DokController extends Controller
         return redirect()->back();
     }
 
-    public function addFoto(Request $req)
+    public function addFoto(Request $req, $id)
     {
         $dok = new Foto;
 
@@ -90,6 +87,7 @@ class DokController extends Controller
         $realtime = Carbon::now();
         $realtime->toDateString();
 
+        $dok->dokumentasi_id = $id;
         $dok->foto_dokumentasi = $filename;
         $dok->waktu_foto_dokumentasi = $realtime;
         $dok->save();
