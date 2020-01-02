@@ -80,6 +80,7 @@ class DokController extends Controller
             Image::make($foto)->resize(150, 150)->save(public_path('/assets/image/' . $filename));
         }
 
+
         $realtime = Carbon::now();
         $realtime->toDateString();
 
