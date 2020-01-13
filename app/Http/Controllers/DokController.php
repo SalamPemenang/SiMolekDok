@@ -17,7 +17,7 @@ class DokController extends Controller
         $foto = DB::table('dokumentasi')
         ->join('foto', 'dokumentasi.id', '=', 'foto.dokumentasi_id')
         ->where('dokumentasi.id_sub_kegiatan', '=', $id)
-        ->select('foto.foto_dokumentasi', 'foto.waktu_foto_dokumentasi')
+        ->select('foto.id','foto.foto_dokumentasi', 'foto.waktu_foto_dokumentasi')
         ->get();
 
         $dok = DB::table('dokumentasi')->where('id_sub_kegiatan', $id)->first();
