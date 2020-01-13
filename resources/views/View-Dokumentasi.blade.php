@@ -49,9 +49,9 @@
     </div>
     <br>
     <div class="container" id="video-load">
-      @if($dok->video_dokumentasi == null)
+      @if($dok->video_dokumentasi == 'Tidak ada video untuk ditampilkan')
       <strong class="c-green">
-        <center>Video Tidak ada!</center>
+        <center>{{$dok->video_dokumentasi}}!</center>
       </strong>
       @else
       <video class="image-card" controls>
