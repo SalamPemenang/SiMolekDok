@@ -5,8 +5,6 @@ body {
 	font-family: 'Ubuntu', sans-serif;
 }
 
-
-
 .dot{
 	border-top-style: dotted;
 	border-right-style: dotted;
@@ -137,7 +135,7 @@ body {
 }
 
 .ribbon {
-	width: 48%;
+	width: 100%;
 	height: 188px;
 	position: relative;
 	float: left;
@@ -184,14 +182,47 @@ body {
   left: -4.5px;
   border-radius: 5px 0 0 5px;
  }
-@media only screen and (min-width: 500px) {
-  .mobile-mini {
-  	display: none;
+ .ribbon1 {
+	position: absolute;
+	top: -6.1px;
+	right: 10px;
   }
-}
-
-@media only screen and (max-width: 600px) {
-  .rule {
-  	display: none;
+  .ribbon1:after {
+	position: absolute;
+	content: "";
+	width: 0;
+	height: 0;
+	border-left: 53px solid transparent;
+	border-right: 53px solid transparent;
+	border-top: 10px solid #165E55;
   }
-}
+  .ribbon1 span {
+	position: relative;
+	display: block;
+	text-align: center;
+	background: #165E55;
+	font-size: 14px;
+	line-height: 1;
+	padding: 12px 8px 10px;
+	border-top-right-radius: 8px;
+	width: 90px;
+  }
+  .ribbon1 span:before, .ribbon1 span:after {
+	position: absolute;
+	content: "";
+  }
+  .ribbon1 span:before {
+   height: 6px;
+   width: 6px;
+   left: -6px;
+   top: 0;
+   background: #165E55;
+  }
+  .ribbon1 span:after {
+   height: 6px;
+   width: 8px;
+   left: -8px;
+   top: 0;
+   border-radius: 8px 8px 0 0;
+   background: #165E55;
+  }

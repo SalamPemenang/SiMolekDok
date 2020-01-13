@@ -5,6 +5,7 @@ use App\Dok;
 use App\Foto;
 use Illuminate\Http\Request;
 use DB;
+use Storage;
 use Image;
 use Carbon\Carbon;
 
@@ -43,28 +44,14 @@ class DokController extends Controller
         $dok = Dok::find($id);
 
         // Video Dokumentasi
-        if($req->hasFile('video_dokumentasi')){
-
-            // $file = $req->file('video_dokumentasi');
-            // $filename2 = time() . '.' . $file->getClientOriginalName();
-            $path = public_path().'/assets/video/';
-            // $file = Storage::putFile(
-            //     'public/video',
-            //     $filename2,
-            // );
-            // $file->move('/public/video', $filename2);
-            $file = $req->file('video_dokumentasi');
-            $name = time().$file->getClientOriginalName();
-            // Storage::putfile('public/videos', $file);
-            $file->move($path, $name);
-        }
+        $file = $req->file('video_dokumentasi');
+        $storagePath = Storage::disk('local')->put('public/videos', $file);
+        $storageName = basename($storagePath);
         
-        // Realtime
-        $realtime = Carbon::now();
-        $realtime->toDateString();
+        $getTakenDate = $req->lastmodifvideo;
         
-        $dok->video_dokumentasi = $name;
-        $dok->waktu_video_dokumentasi = $realtime;
+        $dok->video_dokumentasi = $storageName;
+        $dok->waktu_video_dokumentasi = $getTakenDate;
         $dok->save();
         return redirect()->back();
     }
@@ -77,16 +64,14 @@ class DokController extends Controller
         if($req->hasFile('foto_dokumentasi')){
             $foto = $req->file('foto_dokumentasi');
             $filename = time() . '.' . $foto->getClientOriginalExtension();
-            Image::make($foto)->resize(150, 150)->save(public_path('/assets/image/' . $filename));
+            Image::make($foto)->save(public_path('/assets/image/' . $filename));
         }
 
-
-        $realtime = Carbon::now();
-        $realtime->toDateString();
+        $getTakenDate = $req->lastmodif;
 
         $dok->dokumentasi_id = $id;
         $dok->foto_dokumentasi = $filename;
-        $dok->waktu_foto_dokumentasi = $realtime;
+        $dok->waktu_foto_dokumentasi = $getTakenDate;
         $dok->save();
         return redirect()->back();
     }
