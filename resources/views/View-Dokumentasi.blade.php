@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/style.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/load.css')}}">
-  <link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{asset('/assets/bootstrap/css/bootstrap.min.css')}}">
   <title>Si Molek Dokumentasi View</title>
 </head>
 
@@ -49,9 +49,9 @@
     </div>
     <br>
     <div class="container" id="video-load">
-      @if($dok->video_dokumentasi == null)
+      @if($dok->video_dokumentasi == 'Tidak ada video untuk ditampilkan')
       <strong class="c-green">
-        <center>Video Tidak ada!</center>
+        <center>{{$dok->video_dokumentasi}}!</center>
       </strong>
       @else
       <video class="image-card" controls>
@@ -81,52 +81,83 @@
       </button>
     </div>
     <br>
+    <div class="cssload-container" style="display: none;" id="load-foto">
+      <div class="cssload-loading"><i></i><i></i><i></i><i></i></div>
+    </div>
+    <br>
     <div class="container">
       @foreach($foto as $f)
-      <div class="ribbon image-card" style="background-image: url('{{'/assets/image/'. $f->foto_dokumentasi}}');">
-        <div class="ribbon">
-          <span class="ribbon1">
-            <span>&#128065; Lihat</span>
-          </span>
-          <span class="ribbon4">
-            &#x2139; &nbsp;
-          </span>
+      <div  class="ribbon image-card"
+      id="theImage" 
+      style="background-image: url('{{'/assets/image/'. $f->foto_dokumentasi}}');">
 
+      <div  class="ribbon"style="color: white">
+        <span class="ribbon4" id="myBtn" onclick="showModals({{$f->id}});">
+          i &nbsp;
+        </span>
+
+      </div>
+    </div>
+    <br>
+    <br>
+    <div id="myModal{{$f->id}}" class="modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>
+            Waktu Video: {{$f->waktu_foto_dokumentasi}}
+          </p>
+          <img src="{{'/assets/image/'. $f->foto_dokumentasi}}" style="width: 100%; height: 100%;">
+        </div>
+        <div class="modal-footer">
+          <h5 onclick="hideModals({{$f->id}});">Kembali</h5>
         </div>
       </div>
-      <br>
-      <br>
-      @endforeach
+
     </div>
+    @endforeach
   </div>
+</div>
+<br><br><br>
+<!-- The Modal -->
 
-  <script src="{{asset('assets/bootstrap/js/jquery.min.js')}}"></script>
-  <script src="{{asset('assets/bootstrap/js/popper.min.js')}}"></script>
-  <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('/assets/bootstrap/js/jquery.min.js')}}"></script>
+<script src="{{asset('/assets/bootstrap/js/popper.min.js')}}"></script>
+<script src="{{asset('/assets/bootstrap/js/bootstrap.min.js')}}"></script>
 
-  <script type='text/javascript'>
-    function showFileModified() {
-      var input, file;
+<script type='text/javascript'>
+  function showFileModified() {
+    var input, file;
 
-      input = document.getElementById('file-input-foto');
-      file = input.files[0];
-      console.log("The last modified date of file '" + file.name + "' is " + new Date(file.lastModified));
-      document.getElementById('lastmodif').value = new Date(file.lastModified);
-      document.getElementById('addFotoForm').submit();
-    }
+    input = document.getElementById('file-input-foto');
+    file = input.files[0];
+    console.log("The last modified date of file '" + file.name + "' is " + new Date(file.lastModified));
+    document.getElementById('lastmodif').value = new Date(file.lastModified);
+    document.getElementById('load-foto').style.display = "block";
+    document.getElementById('addFotoForm').submit();
+  }
 
-    function showFileModifiedVideo() {
-      var input, file;
+  function showFileModifiedVideo() {
+    var input, file;
 
-      input = document.getElementById('file-input-video-1');
-      file = input.files[0];
-      console.log("The last modified date of file '" + file.name + "' is " + new Date(file.lastModified));
-      document.getElementById('lastmodifvideo').value = new Date(file.lastModified);
-      document.getElementById('load').style.display = "block";
-      document.getElementById('video-load').style.display = "none";
-      document.getElementById('addVideoForm1').submit();
-    }
-  </script>
+    input = document.getElementById('file-input-video-1');
+    file = input.files[0];
+    console.log("The last modified date of file '" + file.name + "' is " + new Date(file.lastModified));
+    document.getElementById('lastmodifvideo').value = new Date(file.lastModified);
+    document.getElementById('load').style.display = "block";
+    document.getElementById('video-load').style.display = "none";
+    document.getElementById('addVideoForm1').submit();
+  }
+
+function showModals(id){
+  console.log(id);
+  // Get the modal
+  document.getElementById("myModal"+id).style.display = "block";
+}
+function hideModals(id){
+  // Hide the modal
+  document.getElementById("myModal"+id).style.display = "none";
+}
+</script>
 
 </body>
 </html>
