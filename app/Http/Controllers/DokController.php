@@ -22,17 +22,19 @@ class DokController extends Controller
 
         $dok = DB::table('dokumentasi')->where('id_sub_kegiatan', $id)->first();
 
-        return view('View-Dokumentasi', ['foto' => $foto, 'dok' => $dok]);
+        $file = file_get_contents('http://simolek-api.thinkfulltank.net/get_detail_only/admin/1');
+        $json_data = json_decode($file,true);
+
+        return view('View-Dokumentasi', ['foto' => $foto, 'dok' => $dok, 'json_data' => $json_data]);
     }
 
-    public function sendDok($id_sub_kegiatan, $nama_sub_kegiatan)
+    public function sendDok($id_sub_kegiatan)
     {   
         if(DB::table('dokumentasi')->where('id_sub_kegiatan', $id_sub_kegiatan)->first()){
             return redirect('/view/dokumentasi/'.$id_sub_kegiatan);
         }else{
             $sendDok = new Dok;
-            $sendDok->id_sub_kegiatan = $id_sub_kegiatan;
-            $sendDok->nama_sub_kegiatan = $nama_sub_kegiatan;
+            $sendDok->id_sub_kegiatan = $id_sub_kegiatan; 
             $sendDok->save();
 
             return redirect('/view/dokumentasi/'.$id_sub_kegiatan);

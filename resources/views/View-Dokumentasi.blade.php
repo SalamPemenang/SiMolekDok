@@ -26,7 +26,11 @@
     </div>
   </div>
   <div class="content">
-    <h5 class="c-green">{{$dok->nama_sub_kegiatan}}</h5>
+    @foreach($json_data as $nama_detail)
+      @if($nama_detail["id"] == $dok->id_sub_kegiatan)
+      <h5 class="c-green">{{$nama_detail["nama_detail"]}}</h5>
+      @endif
+    @endforeach
   </div>
   <div class="content">
     <div class="container">
